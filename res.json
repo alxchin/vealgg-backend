@@ -3,7 +3,7 @@
         {
             "name": "Skippy",
             "tag": "6413",
-            "time-series-rr": [
+            "timeSeriesRR": [
                 {
                     "date": "2022-02-02",
                     "rr": 50
@@ -21,7 +21,7 @@
         {
             "name": "Bobby",
             "tag": "6200",
-            "time-series-rr": [
+            "timeSeriesRR": [
                 {
                     "date": "2022-02-04",
                     "rr": 300
@@ -39,7 +39,7 @@
         {
             "name": "Hiding Duck",
             "tag": "Ellow",
-            "time-series-rr": [
+            "timeSeriesRR": [
                 {
                     "date": "2022-02-03",
                     "rr": 50
