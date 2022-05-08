@@ -3,7 +3,7 @@ const searchJSONResponse = require('./res.json');
 const app = express();
 require('dotenv').config()
 const PORT = process.env.PORT || 3001;
-const { Pool, Client } = require("pg");
+const { Client } = require("pg");
 const cors = require('cors');
 
 //Middlewares
@@ -12,11 +12,11 @@ app.use(express.json())
 
 //import routes
 const playersDataRoute = require('./routes/playersData');
-
+const playersSearchRoute = require('./routes/playersSearch')
 
 //Routes
 app.use('/api/playersSearch', playersDataRoute);
-
+app.use('/search', playersSearchRoute);
 
 
 app.get("/api", (req, res) => {
@@ -24,26 +24,29 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello from Server!" });
 });
 
-app.post('/search', function (req, res) {
-  res.json(searchJSONResponse)
-});
 
-
-//db config
 // const client = new Client({
 //   connectionString: process.env.DATABASE_URL,
 //   ssl: {
 //     rejectUnauthorized: false
 //   }
 // });
-// //connect to db
-// client.connect(err => {
-//   if (err) {
-//     console.error('connection error', err.stack)
-//   } else {
-//     console.log('connected')
+
+// client.connect();
+// var tableExists = true
+// while (tableExists) {
+//   randTableName = `players${Math.floor((Math.random() * 10000))}`
+//   tableExists = client.query(`SELECT EXISTS (SELECT FROM ${randTableName})`, (err, res) => {
+//     if (err) return false
+//   })
+// }
+// client.query(`CREATE TABLE ${randTableName} (name varchar(16), tag varchar(5));`, (err, res) => {
+//   if (err) throw err;
+//   for (let row of res.rows) {
+//     console.log(JSON.stringify(row));
 //   }
-// })
+//   client.end();
+// });
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
