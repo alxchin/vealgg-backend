@@ -18,5 +18,6 @@ async function trackerScrapper(names, hashtag) {
     console.log(data)
 };
 
+trackerScrapper(['Beifeng'], ['1800'])
 
 module.exports = trackerScrapper
