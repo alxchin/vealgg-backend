@@ -16,45 +16,28 @@ client.connect();
 
 router.post('/', function (req, res) {
     const searchedPlayers = req.body
-    //check if player exists
-    var randTableName = `players${Math.floor((Math.random() * 10000))}`
-    var tableExists = client.query(`SELECT EXISTS (SELECT FROM ${randTableName})`, (err, res) => {
-        if (err) return false
-    })
-    //if exist generate another name
-    while (tableExists) {
-        randTableName = `players${Math.floor((Math.random() * 10000))}`
-    }
-    //if it dosent exist, generate a table with that name
-    client.query(`CREATE TABLE ${randTableName} (name varchar(16), tag varchar(5));`, (err, res) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-            console.log(JSON.stringify(row));
-        }
-    });
-    //loop and insert all users within the group
+
+    randGroupID = Date.now() / Math.floor((Math.random() * 10000))
+    console.log(randGroupID)
+
     for (let player in searchedPlayers) {
-        console.log(searchedPlayers[player].name)
-        const insertGroupText = `INSERT INTO ${randTableName} VALUES
-            ('${searchedPlayers[player].name}', '${searchedPlayers[player].tag}');`
+        const insertGroupText = `INSERT INTO players VALUES
+            ('${searchedPlayers[player].name}', '${searchedPlayers[player].tag}', ${randGroupID});`
         client.query(insertGroupText, (err, res) => {
             if (err) throw err;
         });
+        client.query(`INSERT INTO playersrr VALUES
+            ('${searchedPlayers[player].name}', '${searchedPlayers[player].tag}', '{1}', '{1}');`, (err, res) => {
+            if (err.code == 23505) {
+                console.log('sss')
+            };
+        })
+        // client.query(`INSERT INTO playersrr VALUES = ${randGroupID}`, (err, res) => {
+        //     data = res.rows
+        // })
     }
-    insertPlayerDB(searchedPlayers)
-    // res.json(searchJSONResponse)
 });
 
 
-
-
-
-// client.query('CREATE TABLE players (name varchar(16), tag varchar(5), GroupID int);', (err, res) => {
-//   if (err) throw err;
-//   for (let row of res.rows) {
-//     console.log(JSON.stringify(row));
-//   }
-//   client.end();
-// });
 
 module.exports = router;

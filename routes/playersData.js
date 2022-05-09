@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
     });
 
     const users = await Players.findAll();
-    console.log(users)
 })
 
 module.exports = router;

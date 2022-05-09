@@ -20,10 +20,7 @@ async function trackerScrapper(names, hashtag) {
             console.error(e);
         }
     }
-    console.log(data)
     return data
 };
-
-trackerScrapper(['Beifeng', 'Hiding Duck'], ['1800', 'ELLOW'])
 
 module.exports = trackerScrapper
